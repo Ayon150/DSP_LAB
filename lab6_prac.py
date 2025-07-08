@@ -6,45 +6,22 @@ def u(n):
     return np.where(n >= 0, 1, 0)
 
 
-def h(n):
-    return u(n) - u(n-5)
-
-
 def x(n):
     return u(n)
 
 
-n = np.arange(-5, 15)
+def h(n):
+    return u(n)-u(n-5)
 
+
+n = np.arange(-10, 20)
 y = np.zeros(len(n))
 
 for i in range(len(n)):
-    sum = 0
+    sum_value = 0
     for k in range(len(n)):
-        if i-k >= 0:
-            sum += x(k) * h(i-k)
-    y[i] = sum
+        n_k = n[i] - n[k]
+        sum_value += x(n[i])*h(n_k)
+    y[i]=sum_value
 
-plt.figure(figsize=(10, 5))
-
-plt.subplot(3, 1, 1)
-plt.stem(n, x(n))
-plt.title('Input signal')
-plt.legend()
-plt.grid(True)
-
-plt.subplot(3, 1, 2)
-plt.stem(n, h(n))
-plt.title('Input signal')
-plt.legend()
-plt.grid(True)
-
-plt.subplot(3, 1, 3)
-plt.stem(n, y)
-plt.title('Input signal')
-plt.legend()
-plt.grid(True)
-
-plt.tight_layout()
-plt.show()
-
+print(y)

@@ -6,7 +6,7 @@ n = np.arange(-10, 11, 1)
 
 # Compute the sinusoidal signal for ω = π
 omega = np.pi
-sinusoidal_signal = np.cos(omega/4 * n)
+sinusoidal_signal = np.cos(omega * n)
 
 # Plot the signal
 plt.stem(n, sinusoidal_signal)

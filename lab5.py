@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # Define the analog signal function
 def analog_signal(t):
     return 3*np.cos(200*np.pi*t) + 5*np.sin(600*np.pi*t) + 10*np.cos(1200*np.pi*t)
+
 
 # Define time for continuous signal
 t_cont = np.linspace(0, 0.01, 1000)  # High-resolution time vector

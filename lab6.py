@@ -1,29 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # Define the unit step function
 def u(n):
     return np.where(n >= 0, 1, 0)
+
 
 # Define impulse response h[n] = u(n) - u(n-5)
 def h(n):
     return u(n) - u(n - 5)
 
+
 # Define input signal x[n] = u(n)
 def x(n):
     return u(n)
 
-# Define range for computation
-n = np.arange(-5, 15)  # Defines a range for visualization
 
-# Perform convolution manually
+# Define range for computation
+n = np.arange(-10, 20)  # Defines a range for visualization
 y = np.zeros(len(n))  # Initialize output array
-for i in range(len(n)):  # Loop over each value of n
+
+# Perform manual convolution: y[n] = sum of x(k) * h(n - k)
+for i in range(len(n)):
     sum_value = 0
-    for k in range(len(n)):  # Perform summation
-        if i - k >= 0:  # Ensure valid indexing
-            sum_value += x(k) * h(i - k)
-    y[i] = sum_value  # Store computed value
+    for k in range(len(n)):
+        n_k = n[i] - n[k]
+        sum_value += x(n[k]) * h(n_k)
+    y[i] = sum_value
 
 # Plot results
 plt.figure(figsize=(10, 5))

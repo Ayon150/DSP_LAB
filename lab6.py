@@ -9,7 +9,7 @@ def u(n):
 
 # Define impulse response h[n] = u(n) - u(n-5)
 def h(n):
-    return u(n) - u(n - 5)
+    return u(n+5) - u(n)
 
 
 # Define input signal x[n] = u(n)
@@ -22,13 +22,13 @@ n = np.arange(-10, 20)  # Defines a range for visualization
 y = np.zeros(len(n))  # Initialize output array
 
 # Perform manual convolution: y[n] = sum of x(k) * h(n - k)
-for i in range(len(n)):
+for i in range(len(n)-5):
     sum_value = 0
-    for k in range(len(n)):
+    for k in range(len(n)-5):
         n_k = n[i] - n[k]
         sum_value += x(n[k]) * h(n_k)
     y[i] = sum_value
-
+    
 # Plot results
 plt.figure(figsize=(10, 5))
 
@@ -45,7 +45,7 @@ plt.legend()
 plt.grid()
 
 plt.subplot(3, 1, 3)
-plt.stem(n, y, linefmt='g-', markerfmt='go', basefmt="k-", label='y[n] = x[n] * h[n]')
+plt.stem(nn, y, linefmt='g-', markerfmt='go', basefmt="k-", label='y[n] = x[n] * h[n]')
 plt.title("Output Signal y[n] (Manual Convolution)")
 plt.legend()
 plt.grid()

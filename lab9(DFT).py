@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#========================   define parameter =================================
+# ========================   define parameter =================================
 N = 128
 fs = 8000
 Ts = 1 / fs
@@ -9,15 +9,15 @@ t = np.arange(N) * Ts
 n = np.arange(N)
 freq = np.arange(N) * fs / N
 
+# ======================   define signal  ====================================
 
 
-#======================   define signal  ====================================
 def sig(ts):
   return np.sin(2*np.pi*1000*ts) + 0.5 * np.sin(2*np.pi*2000*ts + 4 * np.pi)
 
 
+# ========================= window  function ==========================
 
-#========================= window  function ==========================
 def han(N):
   return [(0.5 - 0.5 * np.cos(2*np.pi*n/(N-1))) for n in range(N)]
 

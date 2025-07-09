@@ -1,48 +1,73 @@
+'''
+Given 
+x(n)=[1,3,−2,4] 
+y(n)=[2,3,−1,3] 
+z(n)=[2,−1,4,−2] 
+Find the correlation between x(n) & y(n) and y(n) & z(n). ⟹ observe the 
+realization.
+''' 
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Given discrete signals
+# Define the sequences
 x = np.array([1, 3, -2, 4])
 y = np.array([2, 3, -1, 3])
 z = np.array([2, -1, 4, -2])
 
-# Cross-correlation function (manual implementation)
-def cross_correlation(a, b):
-    len_a = len(a)
-    len_b = len(b)
-    result = np.zeros(len_a + len_b - 1)
 
-    for m in range(-(len_b - 1), len_a):  # Shifting index (lag)
-        sum_value = 0
-        for n in range(len_a):  # Iterating through signal
-            if 0 <= n - m < len_b:  # Ensure valid index
-                sum_value += a[n] * b[n - m]
-        result[m + (len_b - 1)] = sum_value  # Store in correct index
-    return result
+# Function to calculate normalized correlation 
 
-# Compute correlations
-r_xy = cross_correlation(x, y)
-r_yz = cross_correlation(y, z)
+def normalized_corr(x, y):
+    numerator = np.sum(x * y)
+    denominator = np.sqrt(np.sum(x**2)) * np.sqrt(np.sum(y**2))
+    return numerator / denominator
 
-# Define lag values
-lags = np.arange(-(len(y) - 1), len(x))
 
-# Plot results
-plt.figure(figsize=(12, 10))
+# Calculate the normalized correlation
+def correlation(x, y):
+        N = len(x) + len(y) - 1
+        result = np.zeros(N)
+
+        for i in range(N):
+              sum = 0
+              for k in range(len(x)):
+                    if i-k>=0 and i-k<len(y):
+                        sum += x[k] * y[i-k]
+              result[i] = sum
+        return result
+
+
+r_xy = normalized_corr(x, y) 
+r_yz = normalized_corr(y, z)
+s = str(r_xy)
+s = 'correlation value: ' + s[:5]
+
+r_xy_0 = correlation(x, y[::-1])
+r_yz_0 = correlation(y, z[::-1])
+lag = np.arange(-len(x) + 1, len(y))
+
+# Display the results
 
 plt.subplot(2, 1, 1)
-plt.stem(lags, r_xy)
-plt.title("Corrected Cross-Correlation between x(n) and y(n)")
-plt.xlabel("Lag")
-plt.ylabel("Correlation")
-plt.grid()
+plt.title('Correlation between x(n) and y(n)')
+plt.stem(lag , r_xy_0, label= s, linefmt='b-', basefmt='k-')
+plt.legend()
+plt.xlabel('Lag')
+plt.ylabel('Amplitude')
+plt.grid(True)
+
+
+
+s = str(r_yz)
+s = 'correlation value: ' + s[:5]
 
 plt.subplot(2, 1, 2)
-plt.stem(lags, r_yz)
-plt.title("Corrected Cross-Correlation between y(n) and z(n)")
-plt.xlabel("Lag")
-plt.ylabel("Correlation")
-plt.grid()
-
+plt.title('Correlation between y(n) and z(n)')
+plt.stem(lag, r_yz_0, label= s, linefmt='g-', basefmt='k-')
+plt.legend()
+plt.xlabel('Lag')
+plt.ylabel('Amplitude')
+plt.grid(True)
 plt.tight_layout()
 plt.show()

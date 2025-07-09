@@ -1,15 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#===================== sampling setup =========================
+# ===================== sampling setup =========================
 
 fs = 1200
-t = np.arange(0, 1, 1/fs)
+t = np.linspace(0, 1, fs)
 x = np.sin(2 * np.pi * 5 * t) + 0.5 * np.sin(2 * np.pi * 50 * t)
 
 
 
-#===================  convolution definition =========================
+# ===================  convolution definition =========================
 def convolution(x, h):
   N = len(x) + len(h) - 1
   y = []
@@ -30,7 +30,7 @@ def hann(N):
 def gen_impulse(N, fc, fs):    
   center = (N-1) / 2  
   n = np.arange(N)
-  h = np.sinc(2 * fc * (n - center) / fs )  * hann(N)
+  h = 2 * fc * np.sinc(2 * fc * (n - center) / fs )  * hann(N)
   h = h / np.sum(h)
   return h
 

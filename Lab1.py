@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 n = np.arange(-10, 11, 1)
-
+nn = np.linspace(0, 10, 1000)
 # unit step signal
 unit_step = np.where(n >= 0, 1, 0)
 
@@ -18,10 +18,10 @@ pi = np.pi
 A = 1
 f = .1
 fi = 0
-sine_signal = A * np.sin(2 * pi * f * n + fi)
+sine_signal = A * np.sin(2 * pi * f * nn + fi)
 
 # cos wave signal
-cosine_signal = A * np.cos(2 * pi * f * n + fi)
+cosine_signal = A * np.cos(2 * pi * f * nn + fi)
 
 # Plot signals
 
@@ -43,12 +43,12 @@ plt.title('Exponential Signal')
 plt.grid(True)
 
 plt.subplot(3, 2, 4)
-plt.stem(n, sine_signal)
+plt.plot(nn, sine_signal)
 plt.title('Sine Wave Signal')
 plt.grid(True)
 
 plt.subplot(3, 2, 5)
-plt.stem(n, cosine_signal)
+plt.plot(nn, cosine_signal)
 plt.title('Cosine Wave Signal') 
 plt.grid(True)
 
